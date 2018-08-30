@@ -1,0 +1,15 @@
+1. Install NodeJS
+2. In terminal type: "npm init" to create package.json file
+3. Config plugins
+4. Type "npm install"
+
+
+Note: Gulp
+
+Global installation: 		npm uninstall gulp -g && npm install gulpjs/gulp-cli#4.0 -g  or   npm install gulpjs/gulp-cli -g
+From within your project: 	npm uninstall gulp && npm install gulpjs/gulp.git#4.0 --save-dev
+Gulp check version: 		gulp --version || gulp -v
+
+If has message   Please try running this command again as root/Administrator.
+1. Run   npm cache clean
+2. %APPDATA%   Remove folder npm
