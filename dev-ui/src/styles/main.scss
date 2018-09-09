@@ -1,0 +1,149 @@
+@import 'setting';
+@import 'header';
+
+@keyframes arrow-movement-prev {
+    0% {
+        margin-left: 0;
+    }
+    50% {
+        margin-left: -3px;
+    }
+    100% {
+        margin-left: 0;
+    }
+}
+
+@keyframes arrow-movement-next {
+    0% {
+        margin-right: 0;
+    }
+    50% {
+        margin-right: -3px;
+    }
+    100% {
+        margin-left: 0;
+    }
+}
+
+#wrapper {
+    padding-bottom: 40px;
+    position: relative;
+}
+
+.each-box {
+    border: 1px solid $colorGrey;
+    border-radius: 2px;
+    height: 225px;
+    position: relative;
+    margin-bottom: 30px;
+
+    .top {
+        padding: 10px;
+        display: flex;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        h3 {
+            display: flex;
+            flex-grow: 1;
+            justify-content: flex-start;
+            font-size: 16px;
+            margin: 0;
+            line-height: 22px;
+
+            strong {
+                font-size: 22px;
+                margin-left: 10px;
+                color: $logoGreen;
+            }
+        }
+
+        span {
+            color: $logoBlue;
+            margin-top: 3px;
+
+            &:hover {
+                cursor: pointer;
+                color: $logoGreen;
+            }
+        }
+    }
+
+    .content {
+        padding: 20px 10px;
+        $widthLbl: 60px;
+
+        .branchName {
+            display: block;
+            width: 100%;
+
+            span {
+                padding-right: 10px;
+                display: inline-block;
+                width: $widthLbl;
+                color: #999;
+            }
+
+            input {
+                border: 1px solid $colorGrey;
+                border-radius: 2px;
+                height: 32px;
+                overflow: hidden;
+                padding: 5px 7px;
+                width: calc(100% - 60px);
+
+                &:disabled {
+                    // border-color: rgba(204, 204, 204, 0.2);
+                    border: none;
+                    font-size: 18px;
+                    padding-left: 0;
+                }
+            }
+        }
+
+        .btnBlue {
+            margin-left: $widthLbl;
+        }
+
+        .dateCreated {
+            color: #999;
+            margin: 50px 0 0;
+            font-size: 12px;
+            font-style: italic;
+            text-align: right;
+
+            span {
+                font-size: 13px;
+            }
+        }
+    }
+
+    .botFoot {
+        padding: 10px;
+        border-top: 1px solid rgba(204, 204, 204, 0.2);
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+
+        p {
+            margin: 0;
+
+            img {
+                float: right;
+            }
+        }
+
+        label {
+            color: $colorGrey;
+            margin-bottom: 0;
+        }
+
+        a {
+            color: $logoBlue;
+
+            &:hover {
+                text-decoration: none;
+                color: $logoGreen;
+            }
+        }
+    }
+}
