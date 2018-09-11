@@ -26,7 +26,8 @@ a {
   a:focus, a:focus-within {
     box-shadow: none; }
 
-input {
+input,
+textarea {
   outline: none; }
 
 img {
@@ -100,7 +101,7 @@ button {
 .each-box {
   border: 1px solid #ccc;
   border-radius: 2px;
-  height: 225px;
+  height: 250px;
   position: relative;
   margin-bottom: 30px; }
   .each-box .top {
@@ -126,37 +127,59 @@ button {
         color: #5dad46; }
   .each-box .content {
     padding: 20px 10px; }
-    .each-box .content .branchName {
+    .each-box .content .branchName,
+    .each-box .content .branchDes {
       display: block;
-      width: 100%; }
-      .each-box .content .branchName span {
+      width: 100%;
+      margin-bottom: 7px; }
+      .each-box .content .branchName span,
+      .each-box .content .branchDes span {
         padding-right: 10px;
         display: inline-block;
         width: 60px;
-        color: #999; }
-      .each-box .content .branchName input {
+        color: #999;
+        text-align: right; }
+      .each-box .content .branchName input,
+      .each-box .content .branchName textarea,
+      .each-box .content .branchDes input,
+      .each-box .content .branchDes textarea {
         border: 1px solid #ccc;
         border-radius: 2px;
         height: 32px;
         overflow: hidden;
         padding: 5px 7px;
         width: calc(100% - 60px); }
-        .each-box .content .branchName input:disabled {
+        .each-box .content .branchName input:disabled,
+        .each-box .content .branchName textarea:disabled,
+        .each-box .content .branchDes input:disabled,
+        .each-box .content .branchDes textarea:disabled {
           border: none;
           font-size: 18px;
           padding-left: 0; }
+      .each-box .content .branchName textarea,
+      .each-box .content .branchDes textarea {
+        height: 55px;
+        resize: none;
+        font-size: 14px; }
+        .each-box .content .branchName textarea:disabled,
+        .each-box .content .branchDes textarea:disabled {
+          font-size: 13px;
+          color: #555;
+          padding: 0; }
+    .each-box .content .branchDes span {
+      vertical-align: top; }
     .each-box .content .btnBlue {
       margin-left: 60px; }
     .each-box .content .dateCreated {
       color: #999;
-      margin: 50px 0 0;
       font-size: 12px;
       font-style: italic;
-      text-align: right; }
+      text-align: right;
+      margin: 10px 0 0; }
       .each-box .content .dateCreated span {
         font-size: 13px; }
   .each-box .botFoot {
-    padding: 10px;
+    padding: 7px 10px;
     border-top: 1px solid rgba(204, 204, 204, 0.2);
     position: absolute;
     bottom: 0;

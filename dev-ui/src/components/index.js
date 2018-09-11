@@ -24,6 +24,10 @@ class DashBoard extends PureComponent {
                                     <span>Branch:</span>
                                     {item.nameBranch ? <input type="text" disabled value={item.nameBranch} /> : <input type="text" />}
                                 </label>
+                                <label className="branchDes">
+                                    <span>Des: </span>
+                                    {item.des ? <textarea disabled value={item.des} /> : <textarea />}
+                                </label>
                                 {!item.nameBranch && (
                                     <p>
                                         <button className="btnBlue">Pull</button>

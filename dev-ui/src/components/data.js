@@ -10,6 +10,8 @@ export default [
         id: 1,
         nameBranch: 'branch-name-lk',
         link: 'http://box01.demo.pharma.io',
+        des:
+            'aa aa bdfsdfdf sdfdsf aa aa bdfsdfdf sdfdsf aa aa bdfsdfdf sdfdsf fgggg aa bdfsdfdf sdfdsf aa aa bdfsdfdf sdfdsf aa aa bdfsdfdf sdfdsf',
         createDate: dateCreated
     },
     {
@@ -28,18 +30,21 @@ export default [
         id: 4,
         nameBranch: 'branch-name-lk',
         link: 'http://box04.demo.pharma.io',
+        des: 'aa aa bdfsdfdf sdfdsf',
         createDate: dateCreated
     },
     {
         id: 5,
         nameBranch: 'branch-name-lk',
         link: 'http://box05.demo.pharma.io',
+        des: 'aa aa bdfsdfdf sdfdsf',
         createDate: dateCreated
     },
     {
         id: 6,
         nameBranch: 'branch-name-lk',
         link: 'http://box06.demo.pharma.io',
+        des: 'aa aa bdfsdfdf sdfdsf',
         createDate: dateCreated
     },
     {
