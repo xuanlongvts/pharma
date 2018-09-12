@@ -1,0 +1,9 @@
+import { NAMESPACE_HOME } from '../consts';
+
+export const BOX_REQUEST = `${NAMESPACE_HOME}/BOX_REQUEST`;
+export const BOX_RECIEVE = `${NAMESPACE_HOME}/BOX_RECIEVE`;
+export const BOX_REFRESH = `${NAMESPACE_HOME}/BOX_REFRESH`;
+export const BOX_RELEASE = `${NAMESPACE_HOME}/BOX_RELEASE`;
+export const BOX_UPDATE_DES = `${NAMESPACE_HOME}/BOX_UPDATE_DES`;
+
+export const BOX_ERR = `${NAMESPACE_HOME}/BOX_ERR`;

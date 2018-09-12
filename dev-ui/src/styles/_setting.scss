@@ -18,6 +18,7 @@ $wideDesktop: 1200px;
 $black: #000;
 $blackGrey: #030333;
 $white: #fff;
+$colorGreyDark: #999;
 $colorGrey: #ccc;
 
 $logoGreen: #5dad46;
@@ -131,5 +132,24 @@ button {
         color: $white;
         text-decoration: none;
         box-shadow: 0 2px 10px $logoBlue;
+    }
+}
+
+.btnGrey {
+    display: inline-block;
+    border-radius: 2px;
+    background: $colorGreyDark;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: $white;
+    padding: 0 20px;
+    font-size: 15px;
+
+    &:hover {
+        cursor: pointer;
+        color: $white;
+        text-decoration: none;
+        box-shadow: 0 2px 10px $colorGreyDark;
     }
 }

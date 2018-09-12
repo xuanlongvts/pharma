@@ -60,6 +60,22 @@ button {
     text-decoration: none;
     box-shadow: 0 2px 10px #0f75b2; }
 
+.btnGrey {
+  display: inline-block;
+  border-radius: 2px;
+  background: #999;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  color: #fff;
+  padding: 0 20px;
+  font-size: 15px; }
+  .btnGrey:hover {
+    cursor: pointer;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 2px 10px #999; }
+
 #header {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -119,6 +135,8 @@ button {
         font-size: 22px;
         margin-left: 10px;
         color: #5dad46; }
+      .each-box .top h3 + span {
+        margin-right: 25px; }
     .each-box .top span {
       color: #0f75b2;
       margin-top: 3px; }
@@ -127,45 +145,60 @@ button {
         color: #5dad46; }
   .each-box .content {
     padding: 20px 10px; }
-    .each-box .content .branchName,
-    .each-box .content .branchDes {
+    .each-box .content .eachRow {
       display: block;
       width: 100%;
       margin-bottom: 7px; }
-      .each-box .content .branchName span,
-      .each-box .content .branchDes span {
+      .each-box .content .eachRow span {
         padding-right: 10px;
         display: inline-block;
         width: 60px;
         color: #999;
-        text-align: right; }
-      .each-box .content .branchName input,
-      .each-box .content .branchName textarea,
-      .each-box .content .branchDes input,
-      .each-box .content .branchDes textarea {
+        text-align: right;
+        vertical-align: top; }
+      .each-box .content .eachRow .boxVal {
+        width: calc(100% - 60px);
+        display: inline-block;
+        vertical-align: top;
+        position: relative; }
+        .each-box .content .eachRow .boxVal .err {
+          color: #ff0000;
+          margin: 5px 0 0;
+          position: absolute;
+          right: 5px;
+          top: 3px;
+          font-size: 12px; }
+      .each-box .content .eachRow input,
+      .each-box .content .eachRow textarea {
         border: 1px solid #ccc;
         border-radius: 2px;
         height: 32px;
         overflow: hidden;
         padding: 5px 7px;
-        width: calc(100% - 60px); }
-        .each-box .content .branchName input:disabled,
-        .each-box .content .branchName textarea:disabled,
-        .each-box .content .branchDes input:disabled,
-        .each-box .content .branchDes textarea:disabled {
+        width: 100%; }
+        .each-box .content .eachRow input:disabled,
+        .each-box .content .eachRow textarea:disabled {
           border: none;
           font-size: 18px;
-          padding-left: 0; }
-      .each-box .content .branchName textarea,
-      .each-box .content .branchDes textarea {
+          padding: 0; }
+        .each-box .content .eachRow input::placeholder,
+        .each-box .content .eachRow textarea::placeholder {
+          font-size: 14px; }
+      .each-box .content .eachRow input:disabled {
+        border: none;
+        font-size: 18px;
+        height: 20px;
+        padding: 0; }
+      .each-box .content .eachRow textarea {
         height: 55px;
         resize: none;
         font-size: 14px; }
-        .each-box .content .branchName textarea:disabled,
-        .each-box .content .branchDes textarea:disabled {
+        .each-box .content .eachRow textarea:disabled {
           font-size: 13px;
           color: #555;
           padding: 0; }
+    .each-box .content .actForm .btnGrey {
+      margin-left: 15px; }
     .each-box .content .branchDes span {
       vertical-align: top; }
     .each-box .content .btnBlue {

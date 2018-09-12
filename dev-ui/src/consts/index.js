@@ -1,0 +1,2 @@
+export const NAMESPACE_HOME = 'NAMESPACE_HOME';
+export const NAMESPACE_LOGIN = 'NAMESPACE_LOGIN';

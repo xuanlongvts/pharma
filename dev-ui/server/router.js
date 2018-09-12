@@ -6,12 +6,22 @@ module.exports = {
 
         app.get('/list', function(req, res) {
             fs.readFile(sourceFile, 'utf-8', function(err, data) {
+                var parseData = JSON.parse(data);
+                var dataArr = [];
+
+                for (var key in parseData) {
+                    dataArr.push(parseData[key]);
+                }
+
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+                // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+                // res.setHeader('Access-Control-Allow-Credentials', true);
+
                 res.status(200).send({
-                    data: JSON.parse(data)
+                    data: dataArr
                 });
-                // res.end(data);
             });
-            // get(res);
         });
 
         app.put('/create/:id', function(req, res) {
