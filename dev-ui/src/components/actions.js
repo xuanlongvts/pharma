@@ -20,7 +20,16 @@ export const boxRelease = id => {
     };
 };
 
-export const boxUpdate = (id, des) => {
+export const boxCreateNew = (id, nameBranch, des) => {
+    return {
+        type: listTypes.BOX_CREATE_NEW,
+        id,
+        nameBranch,
+        des
+    };
+};
+
+export const boxUpdateDes = (id, des) => {
     return {
         type: listTypes.BOX_UPDATE_DES,
         id,

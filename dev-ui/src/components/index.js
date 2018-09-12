@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 // import FormBox from './form/form';
 
-import { boxRequest, boxRelease, boxUpdate, boxRefresh } from './actions';
+import { boxRequest, boxRelease, boxUpdateDes, boxRefresh, boxCreateNew } from './actions';
 
 import imgLogo from '../imgs/logo.png';
 import imgSmile from '../imgs/smile.jpg';
@@ -16,6 +16,9 @@ class DashBoard extends PureComponent {
         this.state = {
             data: {}
         };
+
+        this.minNameBranch = 5;
+        this.minDes = 10;
     }
 
     componentDidMount() {
@@ -28,7 +31,7 @@ class DashBoard extends PureComponent {
         let getVal = e.target.value;
         const { data } = this.state;
 
-        if (getVal.length > 5) {
+        if (getVal.length >= this.minNameBranch && data[id] && data[id].nameBranchErr) {
             delete data[id].nameBranchErr;
         }
 
@@ -45,6 +48,10 @@ class DashBoard extends PureComponent {
         let getVal = e.target.value;
         const { data } = this.state;
 
+        if (getVal.length >= this.minDes) {
+            delete data[id].desErr;
+        }
+
         !data[id] && (data[id] = {});
         let newVal = (data[id].des = getVal);
         this.setState({
@@ -53,20 +60,27 @@ class DashBoard extends PureComponent {
         });
     }
 
+    handleReleaseBox(id) {
+        const { boxRelease } = this.props;
+
+        boxRelease(id);
+    }
+
     handleFrmSubmit(e, id) {
         e.preventDefault();
         const { data } = this.state;
+        const { boxCreateNew } = this.props;
 
         let dataSend = data[id];
         if (dataSend) {
-            if (dataSend.nameBranch && dataSend.nameBranch.length < 5) {
+            if (dataSend.nameBranch && dataSend.nameBranch.length < this.minNameBranch) {
                 dataSend.err = true;
                 dataSend.nameBranchErr = 'At least 5 characters';
                 this.setState({
                     ...data,
                     ...dataSend
                 });
-            } else if (dataSend.des && dataSend.des.length < 10) {
+            } else if (dataSend.des && dataSend.des.length < this.minDes) {
                 dataSend.err = true;
                 dataSend.desErr = 'At least 10 characters';
                 this.setState({
@@ -77,16 +91,16 @@ class DashBoard extends PureComponent {
                 dataSend.err = false;
             }
 
-            if (dataSend.nameBranch && dataSend.nameBranch.length >= 5) {
+            if (dataSend.nameBranch && dataSend.nameBranch.length >= this.minNameBranch) {
                 delete dataSend.nameBranchErr;
             }
 
-            if (dataSend.des && dataSend.des.length >= 10) {
+            if (dataSend.des && dataSend.des.length >= this.minDes) {
                 delete dataSend.desErr;
             }
         }
 
-        console.log('dataSend: ', dataSend);
+        !dataSend.err && boxCreateNew(id, dataSend.nameBranch, dataSend.des);
     }
 
     render() {
@@ -106,7 +120,11 @@ class DashBoard extends PureComponent {
 
                                 {item.nameBranch && <span className="act-branch">Refresh</span>}
 
-                                {item.nameBranch && <span className="act-branch">Release</span>}
+                                {item.nameBranch && (
+                                    <span className="act-branch" onClick={() => this.handleReleaseBox(item.id)}>
+                                        Release
+                                    </span>
+                                )}
                             </div>
                             <div className="content">
                                 {/* {<FormBox branchName={item.nameBranch} description={item.des} keyFrm={item.id} />} */}
@@ -194,8 +212,9 @@ class DashBoard extends PureComponent {
 DashBoard.propTypes = {
     boxRequest: PropTypes.func.isRequired,
     boxRelease: PropTypes.func.isRequired,
-    boxUpdate: PropTypes.func.isRequired,
+    boxUpdateDes: PropTypes.func.isRequired,
     boxRefresh: PropTypes.func.isRequired,
+    boxCreateNew: PropTypes.func.isRequired,
     listBoxs: PropTypes.any
 };
 
@@ -208,8 +227,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     boxRequest,
     boxRelease,
-    boxUpdate,
-    boxRefresh
+    boxUpdateDes,
+    boxRefresh,
+    boxCreateNew
 };
 
 export default connect(

@@ -61,4 +61,14 @@ export default class API {
             headers: this.headers
         });
     }
+
+    delete({ path = '', payload }) {
+        return axios({
+            baseURL: Config.API_SERVER,
+            data: payload,
+            method: 'DELETE',
+            url: path,
+            headers: this.headers
+        });
+    }
 }
