@@ -1,6 +1,6 @@
 import { all, put, take, call, fork } from 'redux-saga/effects';
 
-import { boxRecieve } from './actions';
+import { boxRecieve, boxRefresh } from './actions';
 import * as nameActList from './consts';
 
 import { loadingOpen, loadingClose } from './loading/actions';
@@ -96,6 +96,38 @@ function* boxReleaseSaga() {
     }
 }
 
+const boxRefreshHandle = (id, nameBranch) => {
+    const restApi = new API();
+    const path = `/update/${id}`;
+
+    const payload = {
+        id,
+        nameBranch
+    };
+
+    return restApi
+        .post({ path, payload })
+        .then(res => {
+            return res.data;
+        })
+        .catch(err => {
+            return {
+                type: nameActList.BOX_ERR,
+                err
+            };
+        });
+};
+
+function* boxRefreshSaga() {
+    while (true) {
+        const { id, nameBranch } = yield take(nameActList.BOX_REFRESH);
+        // yield put(loadingOpen());
+        const result = yield call(boxRefreshHandle, id, nameBranch);
+        console.log('result: ', result);
+        // result && (yield put(loadingOpen()));
+    }
+}
+
 export default function* root() {
-    yield all([fork(boxGet), fork(boxCreateNewSaga), fork(boxReleaseSaga)]);
+    yield all([fork(boxGet), fork(boxCreateNewSaga), fork(boxReleaseSaga), fork(boxRefreshSaga)]);
 }

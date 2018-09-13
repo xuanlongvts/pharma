@@ -73,6 +73,12 @@ class DashBoard extends PureComponent {
         });
     }
 
+    handleRefreshBox(id, nameBranch) {
+        const { boxRefresh } = this.props;
+
+        boxRefresh(id, nameBranch);
+    }
+
     handleModalConfirm() {
         const { boxRelease } = this.props;
         const { idBox } = this.state;
@@ -145,7 +151,11 @@ class DashBoard extends PureComponent {
                                     box: <strong>{item.id}</strong>
                                 </h3>
 
-                                {item.nameBranch && <span className="act-branch">Refresh</span>}
+                                {item.nameBranch && (
+                                    <span className="act-branch" onClick={() => this.handleRefreshBox(item.id, item.nameBranch)}>
+                                        Refresh
+                                    </span>
+                                )}
 
                                 {item.nameBranch && (
                                     <span className="act-branch" onClick={() => this.handleReleaseBox(item.id)}>

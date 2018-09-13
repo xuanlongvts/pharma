@@ -37,9 +37,10 @@ export const boxUpdateDes = (id, des) => {
     };
 };
 
-export const boxRefresh = id => {
+export const boxRefresh = (id, nameBranch) => {
     return {
         type: listTypes.BOX_REFRESH,
-        id
+        id,
+        nameBranch
     };
 };
