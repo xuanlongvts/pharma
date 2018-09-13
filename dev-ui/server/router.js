@@ -84,7 +84,7 @@ module.exports = {
                     });
                 })
                 .catch(function(err) {
-                    console.log('err: ', err);
+                    console.log('create err: ', err);
                 });
         });
 
@@ -95,16 +95,15 @@ module.exports = {
             gitLocal = `../listBoxs/box${getId}`;
 
             rimraf(`${gitLocal}`, function(err) {
-                if (err) console.log('err: ', err);
-            });
+                if (err) console.log('update err: ', err);
 
-            Git.Clone(gitUrl, gitLocal, gitCloneOpts).then(function(repo) {
-                repo.getBranch('refs/remotes/origin/' + getNameBranch).then(function(reference) {
-                    return repo.checkoutRef(reference);
+                Git.Clone(gitUrl, gitLocal, gitCloneOpts).then(function(repo) {
+                    repo.getBranch('refs/remotes/origin/' + getNameBranch).then(function(reference) {
+                        res.end('update: ' + req.params.id);
+                        return repo.checkoutRef(reference);
+                    });
                 });
             });
-
-            res.end('update: ' + req.params.id);
         });
 
         app.delete('/delete/:id', function(req, res) {
@@ -119,29 +118,27 @@ module.exports = {
             };
 
             rimraf(`${gitLocal}${id}`, function(err) {
-                if (err) console.log('err: ', err);
+                if (err) console.log('delete err: ', err);
 
-                console.log(`Successfully deleted a directory ${gitLocal}${id}`);
-            });
+                fs.readFile(sourceFile, 'utf8', function(err, data) {
+                    var parseData = JSON.parse(data);
+                    delete parseData[id];
+                    parseData[id] = newBox;
 
-            fs.readFile(sourceFile, 'utf8', function(err, data) {
-                var parseData = JSON.parse(data);
-                delete parseData[id];
-                parseData[id] = newBox;
-
-                var dataArr = [];
-                for (var key in parseData) {
-                    if (parseInt(key, 10) === parseInt(id, 10)) {
-                        dataArr.push(newBox);
-                    } else {
-                        dataArr.push(parseData[key]);
+                    var dataArr = [];
+                    for (var key in parseData) {
+                        if (parseInt(key, 10) === parseInt(id, 10)) {
+                            dataArr.push(newBox);
+                        } else {
+                            dataArr.push(parseData[key]);
+                        }
                     }
-                }
 
-                fs.writeFileSync(sourceFile, JSON.stringify(parseData));
+                    fs.writeFileSync(sourceFile, JSON.stringify(parseData));
 
-                res.status(200).send({
-                    data: dataArr
+                    res.status(200).send({
+                        data: dataArr
+                    });
                 });
             });
         });

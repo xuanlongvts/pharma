@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -170,7 +170,6 @@ class DashBoard extends PureComponent {
                                         <span>Branch:</span>
                                         <div className="boxVal">
                                             {item.nameBranch ? (
-                                                // <input name="branch" type="text" disabled value={item.nameBranch} />
                                                 <p className="nameBranchShow">{item.nameBranch}</p>
                                             ) : (
                                                 <input
@@ -187,8 +186,9 @@ class DashBoard extends PureComponent {
                                         <span>Des: </span>
                                         <div className="boxVal">
                                             {item.des ? (
-                                                // <textarea type="textarea" name="description" disabled value={item.des} />
-                                                <p className="desBranchShow">{item.des}</p>
+                                                <Fragment>
+                                                    <p className="desBranchShow">{item.des}</p>
+                                                </Fragment>
                                             ) : (
                                                 <textarea
                                                     type="textarea"

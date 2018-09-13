@@ -121,10 +121,10 @@ const boxRefreshHandle = (id, nameBranch) => {
 function* boxRefreshSaga() {
     while (true) {
         const { id, nameBranch } = yield take(nameActList.BOX_REFRESH);
-        // yield put(loadingOpen());
+        yield put(loadingOpen());
         const result = yield call(boxRefreshHandle, id, nameBranch);
         console.log('result: ', result);
-        // result && (yield put(loadingOpen()));
+        result && (yield put(loadingClose()));
     }
 }
 
