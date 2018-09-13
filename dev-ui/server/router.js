@@ -55,37 +55,41 @@ module.exports = {
 
             gitLocal = `../listBoxs/box${id}`;
 
-            Git.Clone(gitUrl, gitLocal, gitCloneOpts)
-                .then(function(repo) {
-                    repo.getBranch('refs/remotes/origin/' + nameBranch).then(function(reference) {
-                        // console.log('Cloned ' + path.basename(gitUrl) + ' to ' + repo.workdir());
+            rimraf(`${gitLocal}`, function(err) {
+                if (err) console.log('create err: ', err);
 
-                        fs.readFile(sourceFile, 'utf-8', function(err, data) {
-                            var parseData = JSON.parse(data);
-                            delete parseData[id];
-                            parseData[id] = newBox;
+                Git.Clone(gitUrl, gitLocal, gitCloneOpts)
+                    .then(function(repo) {
+                        repo.getBranch('refs/remotes/origin/' + nameBranch).then(function(reference) {
+                            // console.log('Cloned ' + path.basename(gitUrl) + ' to ' + repo.workdir());
 
-                            var dataArr = [];
-                            for (var key in parseData) {
-                                if (parseInt(key, 10) === parseInt(id, 10)) {
-                                    dataArr.push(newBox);
-                                } else {
-                                    dataArr.push(parseData[key]);
+                            fs.readFile(sourceFile, 'utf-8', function(err, data) {
+                                var parseData = JSON.parse(data);
+                                delete parseData[id];
+                                parseData[id] = newBox;
+
+                                var dataArr = [];
+                                for (var key in parseData) {
+                                    if (parseInt(key, 10) === parseInt(id, 10)) {
+                                        dataArr.push(newBox);
+                                    } else {
+                                        dataArr.push(parseData[key]);
+                                    }
                                 }
-                            }
 
-                            fs.writeFileSync(sourceFile, JSON.stringify(parseData));
-                            res.status(200).send({
-                                data: dataArr
+                                fs.writeFileSync(sourceFile, JSON.stringify(parseData));
+                                res.status(200).send({
+                                    data: dataArr
+                                });
                             });
-                        });
 
-                        return repo.checkoutRef(reference);
+                            return repo.checkoutRef(reference);
+                        });
+                    })
+                    .catch(function(err) {
+                        console.log('create err: ', err);
                     });
-                })
-                .catch(function(err) {
-                    console.log('create err: ', err);
-                });
+            });
         });
 
         app.post('/update/:id', function(req, res) {
