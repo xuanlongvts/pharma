@@ -3,6 +3,8 @@ import { all, put, take, call, fork } from 'redux-saga/effects';
 import { boxRecieve } from './actions';
 import * as nameActList from './consts';
 
+import { loadingOpen, loadingClose } from './loading/actions';
+
 import API from '../_services/api';
 
 const fetchBox = () => {
@@ -56,8 +58,10 @@ const createNewBoxRequest = (id, nameBranch, des) => {
 function* boxCreateNewSaga() {
     while (true) {
         const { id, nameBranch, des } = yield take(nameActList.BOX_CREATE_NEW);
+        yield put(loadingOpen());
         const result = yield call(createNewBoxRequest, id, nameBranch, des);
-        console.log('result: ', result);
+        yield put(loadingClose());
+        yield put(boxRecieve(result.data));
     }
 }
 
@@ -87,7 +91,8 @@ function* boxReleaseSaga() {
         const { id } = yield take(nameActList.BOX_RELEASE);
 
         const result = yield call(boxReleaseHandle, id);
-        console.log('result: ', result);
+
+        yield put(boxRecieve(result.data));
     }
 }
 

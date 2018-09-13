@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // import FormBox from './form/form';
+import Modal from './modal';
 
 import { boxRequest, boxRelease, boxUpdateDes, boxRefresh, boxCreateNew } from './actions';
 
@@ -14,11 +15,16 @@ class DashBoard extends PureComponent {
         super(props);
 
         this.state = {
-            data: {}
+            data: {},
+            isModalOpen: false,
+            idBox: null
         };
 
         this.minNameBranch = 5;
         this.minDes = 10;
+
+        this.handleModalConfirm = this.handleModalConfirm.bind(this);
+        this.handleModalCancel = this.handleModalCancel.bind(this);
     }
 
     componentDidMount() {
@@ -61,9 +67,27 @@ class DashBoard extends PureComponent {
     }
 
     handleReleaseBox(id) {
-        const { boxRelease } = this.props;
+        this.setState({
+            isModalOpen: true,
+            idBox: id
+        });
+    }
 
-        boxRelease(id);
+    handleModalConfirm() {
+        const { boxRelease } = this.props;
+        const { idBox } = this.state;
+
+        idBox && boxRelease(idBox);
+
+        this.setState({
+            isModalOpen: false
+        });
+    }
+
+    handleModalCancel() {
+        this.setState({
+            isModalOpen: false
+        });
     }
 
     handleFrmSubmit(e, id) {
@@ -73,14 +97,14 @@ class DashBoard extends PureComponent {
 
         let dataSend = data[id];
         if (dataSend) {
-            if (dataSend.nameBranch && dataSend.nameBranch.length < this.minNameBranch) {
+            if (!dataSend.nameBranch || (dataSend.nameBranch && dataSend.nameBranch.length < this.minNameBranch)) {
                 dataSend.err = true;
                 dataSend.nameBranchErr = 'At least 5 characters';
                 this.setState({
                     ...data,
                     ...dataSend
                 });
-            } else if (dataSend.des && dataSend.des.length < this.minDes) {
+            } else if (!dataSend.des || (dataSend.des && dataSend.des.length < this.minDes)) {
                 dataSend.err = true;
                 dataSend.desErr = 'At least 10 characters';
                 this.setState({
@@ -99,13 +123,16 @@ class DashBoard extends PureComponent {
                 delete dataSend.desErr;
             }
         }
+        if (dataSend === undefined || dataSend.err) {
+            return;
+        }
 
         !dataSend.err && boxCreateNew(id, dataSend.nameBranch, dataSend.des);
     }
 
     render() {
         const { listBoxs } = this.props;
-        const { data } = this.state;
+        const { data, isModalOpen, idBox } = this.state;
 
         const ListBox =
             listBoxs.length > 0 &&
@@ -133,7 +160,8 @@ class DashBoard extends PureComponent {
                                         <span>Branch:</span>
                                         <div className="boxVal">
                                             {item.nameBranch ? (
-                                                <input name="branch" type="text" disabled value={item.nameBranch} />
+                                                // <input name="branch" type="text" disabled value={item.nameBranch} />
+                                                <p className="nameBranchShow">{item.nameBranch}</p>
                                             ) : (
                                                 <input
                                                     type="text"
@@ -149,7 +177,8 @@ class DashBoard extends PureComponent {
                                         <span>Des: </span>
                                         <div className="boxVal">
                                             {item.des ? (
-                                                <textarea type="textarea" name="description" disabled value={item.des} />
+                                                // <textarea type="textarea" name="description" disabled value={item.des} />
+                                                <p className="desBranchShow">{item.des}</p>
                                             ) : (
                                                 <textarea
                                                     type="textarea"
@@ -161,8 +190,13 @@ class DashBoard extends PureComponent {
                                         </div>
                                     </label>
                                     {!item.nameBranch && (
-                                        <p>
-                                            <button className="btnBlue">Pull</button>
+                                        <p className="actForm">
+                                            <button type="submit" className="btnBlue">
+                                                Pull
+                                            </button>
+                                            <button type="reset" className="btnGrey">
+                                                Reset
+                                            </button>
                                         </p>
                                     )}
                                 </form>
@@ -204,6 +238,13 @@ class DashBoard extends PureComponent {
                         <div className="row">{ListBox}</div>
                     </div>
                 </section>
+
+                <Modal
+                    handleModalConfirm={this.handleModalConfirm}
+                    handleModalCancel={this.handleModalCancel}
+                    isModalOpen={isModalOpen}
+                    idBox={idBox}
+                />
             </div>
         );
     }
